@@ -13,6 +13,7 @@ interface Props {
   paramsLink?: string;
   blank?: string;
   isTitleSection?: boolean;
+  center?: boolean;
   className?: string;
 }
 
@@ -24,6 +25,7 @@ const JustifiedRowItem = ({
   selected = false,
   alignItems = 'center',
   isTitleSection = false,
+  center,
   paramsLink,
   blank,
   className,
@@ -32,17 +34,16 @@ const JustifiedRowItem = ({
     id="container"
     className={className}
     isTitleSection={isTitleSection}
+    center={center}
     alignItems={alignItems}
-    selected={selected}
-  >
+    selected={selected}>
     <Span id="left-span" display="inline">
       <Label
         id="main-label"
         weight={isTitleSection ? '600' : '500'}
         size={isTitleSection ? '16px' : '14px'}
         lineHeight={isTitleSection ? '19px' : '16px'}
-        color={isTitleSection ? '#31394D' : '#748AA1'}
-      >
+        color={isTitleSection ? '#31394D' : '#748AA1'}>
         {`${label}${' '}`}
       </Label>
       <Label id="parenthesis" color="#31394D" weight="500">
@@ -66,8 +67,7 @@ const JustifiedRowItem = ({
           <Link
             target={blank ? '_blank' : undefined}
             href={paramsLink}
-            marginLeft="10px"
-          >
+            marginLeft="10px">
             <Icon
               width={12}
               height={12}
@@ -82,7 +82,8 @@ const JustifiedRowItem = ({
 );
 
 const ItemContainer = styled.div`
-  padding: 5px 0px 5px 0px;
+  padding: ${({ isTitleSection }: Partial<Props>) =>
+    isTitleSection ? '5px 0px 5px 0px' : '15px 0px 0px 0px'};
   background: ${({ selected }: Partial<Props>) =>
     selected ? '#EBEDF4' : 'white'};
   display: grid;
@@ -95,6 +96,7 @@ const ItemContainer = styled.div`
     isTitleSection ? '1px solid #EBEDF4' : ''};
   border-bottom: ${({ isTitleSection }: Partial<Props>) =>
     isTitleSection ? '1px solid #EBEDF4' : ''};
+  ${({ center }: Partial<Props>) => (center ? 'justify-content: center;' : '')}
 `;
 
 type LabelProps = ThemedStyledProps<
